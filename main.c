@@ -1,23 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+struct Book {
+    int number;
+    char title[10];
+};
 
 int main(void) {
-    char *pc = NULL;
-    int i = 0;
+    struct Book *p;
 
-    pc = (char *)malloc(100 * sizeof(char));
-    if (pc == NULL) {
+    p = (struct Book *)malloc(2 * sizeof(struct Book));
+    if (p == NULL) {
         printf("메모리 할당 오류\n");
-        exit(1);
+        return 1;
     }
 
-    for (i = 0; i < 26; i++) {
-        pc[i] = 'a' + i;
-    }
-    pc[i] = 0; // 문자열 끝을 알리는 널 문자('\0', ASCII 0) 삽입
+    p->number = 1;
+    strcpy(p->title, "C Programming");
 
-    printf("%s\n", pc);
-    free(pc);
+    (p + 1)->number = 2;
+    strcpy((p + 1)->title, "Electronics");
+
+    printf("1번 도서: %d, %s\n", p->number, p->title);
+    printf("2번 도서: %d, %s\n", (p + 1)->number, (p + 1)->title);
+
+    free(p);
+    p = NULL;
 
     return 0;
 }
+
